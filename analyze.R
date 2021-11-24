@@ -4,18 +4,19 @@ require(quanteda)
 require(dplyr)
 require(ggplot2)
 require(magrittr)
+library(readtext)
 
 #import texts
-rgcorpus<-corpus(textfile("txt/*.txt"))
+rgcorpus <- corpus(readtext("txt/*.txt"))
 
 #clean
-rgcorpus<-tokenize(rgcorpus,what="word",removePunct=T,removeSeparators=T)
+rgcorpus <- tokens(rgcorpus,what="word",remove_punct=T,remove_separator=T) 
 
 #summarize
 rgsum<-rgcorpus %>% 
   summary() %>% 
   as.data.frame() %>% 
-  extract(1:13,) %>% 
+  extract(1:14,) %>%
   ungroup()
 
 #get year
