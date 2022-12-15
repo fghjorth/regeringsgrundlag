@@ -1,21 +1,23 @@
-setwd("~/GitHub/regeringsgrundlag")
+setwd("~/Documents/GitHub/regeringsgrundlag/")
 
+require(readtext)
 require(quanteda)
 require(dplyr)
 require(ggplot2)
 require(magrittr)
 
 #import texts
-rgcorpus<-corpus(textfile("txt/*.txt"))
+rgtxts <- readtext(list.files("txt",full.names = T))
+rgcorpus<-corpus(rgtxts)
 
 #clean
-rgcorpus<-tokenize(rgcorpus,what="word",removePunct=T,removeSeparators=T)
+rgtoks<-tokens(rgcorpus,remove_punct = T,remove_numbers = T)
 
 #summarize
-rgsum<-rgcorpus %>% 
+rgsum<-rgtoks %>% 
   summary() %>% 
   as.data.frame() %>% 
-  extract(1:13,) %>% 
+  extract(1:15,) %>% 
   ungroup()
 
 #get year
