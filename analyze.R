@@ -21,18 +21,19 @@ rgsum<-rgtoks %>%
   ungroup()
 
 #get year
-rgsum<-rgsum %>% 
+rgsum2<-rgsum %>% 
   transmute(year=as.numeric(gsub("\\D","",Var1)),
             words=as.numeric(as.character(Freq)),
-            blaablok=ifelse(year %in% c(2001:2010,2015:2016),1,0))
+            blaablok=ifelse(year %in% c(2001:2010,2015:2016),1,0),
+            blaablok2=ifelse(year==2022,2,blaablok))
 
 #plot
-ggplot(rgsum,aes(x=year,y=words)) +
+ggplot(rgsum2,aes(x=year,y=words)) +
   geom_line() +
-  geom_point(aes(color=factor(blaablok)),size=3) +
+  geom_point(aes(color=factor(blaablok2)),size=3) +
   theme_bw() +
   labs(x="År",y="Antal ord") +
-  scale_color_manual(values=c("red","blue")) +
+  scale_color_manual(values=c("red","blue","purple")) +
   theme(legend.position="none")
 
-ggsave("wordplot.png",width=10,height=8)
+ggsave("wordplot.png",width=8,height=7)
